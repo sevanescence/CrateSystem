@@ -1,0 +1,4 @@
+main: com.makotomiyamoto.cratesystem.CrateSystem
+version: 1.0-SNAPSHOT
+name: CrateSystem
+api-version: '1.15'
