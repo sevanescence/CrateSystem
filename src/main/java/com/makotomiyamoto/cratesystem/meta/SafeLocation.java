@@ -1,5 +1,6 @@
 package com.makotomiyamoto.cratesystem.meta;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
 public class SafeLocation {
@@ -19,6 +20,9 @@ public class SafeLocation {
                 location.getBlockY(),
                 location.getBlockZ()
         );
+    }
+    public Location build() {
+        return new Location(Bukkit.getWorld(worldName), x, y, z);
     }
     public String getWorldName() {
         return worldName;

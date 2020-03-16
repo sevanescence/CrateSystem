@@ -2,3 +2,19 @@ main: com.makotomiyamoto.cratesystem.CrateSystem
 version: 1.0-SNAPSHOT
 name: CrateSystem
 api-version: '1.15'
+commands:
+  save:
+    usage: /save
+    description: saves the item youre holding in CrateSystem/test.json
+    permission: crate.admin
+    permission-message: "Sorry, this is a command for debugging ):"
+  load:
+    usage: /load
+    description: loads the item saved in CrateSystem/test.json into the player's inventory
+    permission: crate.admin
+    permission-message: "Sorry, this is a command for debugging ):"
+  drop:
+    usage: /drop
+    description: drops all the chests defined in plugins/CrateSystem/data/chests.json
+    permission: crate.admin
+    permission-message: "Sorry, this is a command for debugging ):"

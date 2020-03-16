@@ -2,6 +2,7 @@
   <dictionary name="TestOS">
     <words>
       <w>bukkit</w>
+      <w>coords</w>
     </words>
   </dictionary>
 </component>

@@ -1,2 +1,12 @@
 com\makotomiyamoto\cratesystem\CrateSystem.class
+com\makotomiyamoto\cratesystem\table\Alpha.class
+com\makotomiyamoto\cratesystem\table\LootTable.class
+com\makotomiyamoto\cratesystem\commands\Drop.class
+com\makotomiyamoto\cratesystem\table\LootChestGroup.class
+com\makotomiyamoto\cratesystem\table\ItemDrop.class
+com\makotomiyamoto\cratesystem\meta\SafeItemStack.class
+com\makotomiyamoto\cratesystem\commands\Save.class
+com\makotomiyamoto\cratesystem\table\Pool.class
+com\makotomiyamoto\cratesystem\meta\SafeItemMeta.class
+com\makotomiyamoto\cratesystem\commands\Load.class
 com\makotomiyamoto\cratesystem\meta\SafeLocation.class

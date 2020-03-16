@@ -2,8 +2,14 @@ package com.makotomiyamoto.cratesystem;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.makotomiyamoto.cratesystem.commands.Drop;
+import com.makotomiyamoto.cratesystem.commands.Load;
+import com.makotomiyamoto.cratesystem.commands.Save;
 import com.makotomiyamoto.cratesystem.meta.SafeLocation;
+import com.makotomiyamoto.cratesystem.table.LootChestGroup;
+import com.makotomiyamoto.cratesystem.table.LootTable;
 import org.bukkit.Location;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -14,8 +20,15 @@ import java.util.List;
 
 public final class CrateSystem extends JavaPlugin {
 
+    @SuppressWarnings("ConstantConditions")
+    /* warning suppression above is for this.getCommand() */
     @Override
     public void onEnable() {
+        /* simple stuff */
+        this.getCommand("save").setExecutor(new Save(this));
+        this.getCommand("load").setExecutor(new Load(this));
+        this.getCommand("drop").setExecutor(new Drop(this));
+        /* bunch of system stuff */
         if (new File(this.getDataFolder().getPath() + File.separator + "data").mkdirs()) {
             System.out.println("CrateSystem data directory created!");
         }
@@ -38,7 +51,8 @@ public final class CrateSystem extends JavaPlugin {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String parse = gson.toJson(parseToSerializableLocationList(locations));
         try {
-            File parsedLocationData = new File(this.getDataFolder().getPath() + File.separator + "data" + File.separator + "chests.json");
+            File parsedLocationData = new File(this.getDataFolder().getPath() + File.separator + "data"
+                    + File.separator + "chests.json");
             if (parsedLocationData.createNewFile()) {
                 System.out.println(parsedLocationData.getPath() + " didn't exist, so I went ahead and created it.");
             }
@@ -49,6 +63,71 @@ public final class CrateSystem extends JavaPlugin {
             e.printStackTrace();
         }
         // TODO create command showing defined chest locations (for debug purposes).
+
+        // TODO actual chest system
+
+        File lootTableGroups = new File(this.getDataFolder().getPath()
+                + File.separator + "loot-table-groups.yml");
+        try {
+            if (lootTableGroups.createNewFile()) {
+                System.out.println(lootTableGroups.getPath() + " created!");
+                BufferedWriter writer = new BufferedWriter(new FileWriter(lootTableGroups));
+                writer.write(
+                        "# alpha: # ONE, TWO, THREE quantity defines what loot tables will generate\n"
+                        + "groups:\n    c1:\n        alpha: ONE\n        locations:\n            - '26-83-168'"
+                );
+                writer.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        FileConfiguration lootTableGroupsYaml = YamlConfiguration.loadConfiguration(lootTableGroups);
+        System.out.println(lootTableGroupsYaml.getConfigurationSection("groups"));
+        ConfigurationSection groups = lootTableGroupsYaml.getConfigurationSection("groups");
+        ArrayList<LootChestGroup> lootChestGroups = new ArrayList<>();
+        for (String groupKey : groups.getKeys(false)) {
+            lootChestGroups.add(LootChestGroup.parseFromYaml(groups.getConfigurationSection(groupKey)));
+        }
+        System.out.println(lootChestGroups);
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(
+                    new File(this.getDataFolder().getPath() + File.separator + "data"
+                    + File.separator + "loot-table-groups.json")
+            ));
+            writer.write(gson.toJson(lootChestGroups));
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // todo loot table parsing to CrateSystem/data/
+        File tablesFolder = new File(this.getDataFolder().getPath() + File.separator + "tables" + File.separator);
+        File target = new File(this.getDataFolder().getPath() + File.separator + "data" + File.separator);
+        if (new File(target.getPath() + File.separator + "tables" + File.separator).mkdirs()) {
+            System.out.println("directory for json tables created!");
+        }
+        File[] tables = tablesFolder.listFiles();
+        LootTable currentLootTable;
+        for (File table : tables) {
+            //System.out.println("name = " + table.getName());
+            currentLootTable = LootTable.parseFromYaml(YamlConfiguration.loadConfiguration(table));
+            String compiledLootTable = gson.toJson(currentLootTable);
+            //System.out.println(compiledLootTable);
+            try {
+                BufferedWriter writer =
+                        new BufferedWriter(
+                                new FileWriter(
+                                        new File(target.getPath() + File.separator + "tables"
+                                                + File.separator +  table.getName()
+                                                + "_Alpha-" + currentLootTable.getAlpha() + ".json")));
+                writer.write(compiledLootTable);
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
     }
 
     private ArrayList<Location> parseFromLists(List<String> list) {
