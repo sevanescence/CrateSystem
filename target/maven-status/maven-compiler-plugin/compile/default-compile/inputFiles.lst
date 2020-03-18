@@ -1,7 +1,10 @@
 C:\Users\TestOS\repos\cratesystem\src\main\java\com\makotomiyamoto\cratesystem\CrateSystem.java
 C:\Users\TestOS\repos\cratesystem\src\main\java\com\makotomiyamoto\cratesystem\debug\Main.java
+C:\Users\TestOS\repos\cratesystem\src\main\java\com\makotomiyamoto\cratesystem\commands\Reload.java
 C:\Users\TestOS\repos\cratesystem\src\main\java\com\makotomiyamoto\cratesystem\meta\SafeLocation.java
+C:\Users\TestOS\repos\cratesystem\src\main\java\com\makotomiyamoto\cratesystem\commands\Generate.java
 C:\Users\TestOS\repos\cratesystem\src\main\java\com\makotomiyamoto\cratesystem\meta\SafeItemMeta.java
+C:\Users\TestOS\repos\cratesystem\src\main\java\com\makotomiyamoto\cratesystem\commands\TestLoad.java
 C:\Users\TestOS\repos\cratesystem\src\main\java\com\makotomiyamoto\cratesystem\commands\Load.java
 C:\Users\TestOS\repos\cratesystem\src\main\java\com\makotomiyamoto\cratesystem\table\ItemDrop.java
 C:\Users\TestOS\repos\cratesystem\src\main\java\com\makotomiyamoto\cratesystem\table\LootChestGroup.java

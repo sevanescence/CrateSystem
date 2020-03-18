@@ -4,6 +4,7 @@ import com.makotomiyamoto.cratesystem.CrateSystem;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
 
 public class SafeItemStack {
     private Material material;

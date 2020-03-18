@@ -32,4 +32,11 @@ public class Pool {
     public ArrayList<ItemDrop> getItemDrops() {
         return itemDrops;
     }
+    public int getWeightSum() {
+        int weight = 0;
+        for (ItemDrop itemDrop : this.itemDrops) {
+            weight += itemDrop.getWeight();
+        }
+        return weight;
+    }
 }

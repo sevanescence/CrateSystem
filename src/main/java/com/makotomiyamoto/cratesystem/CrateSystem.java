@@ -2,9 +2,7 @@ package com.makotomiyamoto.cratesystem;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.makotomiyamoto.cratesystem.commands.Drop;
-import com.makotomiyamoto.cratesystem.commands.Load;
-import com.makotomiyamoto.cratesystem.commands.Save;
+import com.makotomiyamoto.cratesystem.commands.*;
 import com.makotomiyamoto.cratesystem.meta.SafeLocation;
 import com.makotomiyamoto.cratesystem.table.LootChestGroup;
 import com.makotomiyamoto.cratesystem.table.LootTable;
@@ -28,6 +26,9 @@ public final class CrateSystem extends JavaPlugin {
         this.getCommand("save").setExecutor(new Save(this));
         this.getCommand("load").setExecutor(new Load(this));
         this.getCommand("drop").setExecutor(new Drop(this));
+        this.getCommand("testload").setExecutor(new TestLoad(this));
+        this.getCommand("generate").setExecutor(new Generate(this));
+        this.getCommand("csreload").setExecutor(new Reload(this));
         /* bunch of system stuff */
         if (new File(this.getDataFolder().getPath() + File.separator + "data").mkdirs()) {
             System.out.println("CrateSystem data directory created!");
@@ -105,6 +106,11 @@ public final class CrateSystem extends JavaPlugin {
         File target = new File(this.getDataFolder().getPath() + File.separator + "data" + File.separator);
         if (new File(target.getPath() + File.separator + "tables" + File.separator).mkdirs()) {
             System.out.println("directory for json tables created!");
+        }
+        File destroyDir = new File(target.getPath() + File.separator + "tables");
+        File[] toDestroy = destroyDir.listFiles();
+        for (File destroy : toDestroy) {
+            if (destroy.delete()) System.out.println(destroy.getName() + " deleted");
         }
         File[] tables = tablesFolder.listFiles();
         LootTable currentLootTable;
