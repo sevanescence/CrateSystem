@@ -1,0 +1,8 @@
+com\makotomiyamoto\cratesystem\table\Pool.class
+com\makotomiyamoto\cratesystem\crate\CrateState.class
+com\makotomiyamoto\cratesystem\table\LootTable.class
+com\makotomiyamoto\cratesystem\table\ItemDrop.class
+com\makotomiyamoto\cratesystem\meta\SafeLocation.class
+com\makotomiyamoto\cratesystem\Plugin.class
+com\makotomiyamoto\cratesystem\meta\SafeItemStack.class
+com\makotomiyamoto\cratesystem\crate\CrateReference.class

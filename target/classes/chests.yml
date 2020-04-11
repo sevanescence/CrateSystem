@@ -1,0 +1,18 @@
+chests:
+    chest_1:
+        loot-tables:
+            - "template-loot-table"
+            - "better-loot-table"
+        location:
+            world: world # default
+            x: 0
+            y: 0
+            z: 0
+    chest_2:
+        loot-tables:
+            - "template-loot-table"
+            - "better-loot-table"
+        location:
+            x: 1
+            y: 1
+            z: 1

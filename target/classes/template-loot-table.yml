@@ -1,0 +1,51 @@
+table:
+    weapon_pool:
+        tries: 2
+        min: 1
+        drops:
+            wooden_sword:
+                chance: .50
+                item:
+                    type: wood sword
+                    amount: 1 # default
+            stone_sword:
+                chance: .35
+                item:
+                    type: STONE_SWORD
+            iron_sword:
+                chance: .05
+                item:
+                    type: IRON_SWORD
+    armor_pool:
+        tries: 4
+        min: 1
+        drops:
+            chainmail_helmet:
+                chance: .60
+                item:
+                    type: CHAINMAIL_HELMET
+            leather_chestplate:
+                chance: .55
+                item:
+                type: LEATHER_CHESTPLATE
+            chainmail_leggings:
+                chance: .50
+                item:
+                type: CHAINMAIL_LEGGINGS
+            leather_boots:
+                chance: .55
+                item:
+                    type: LEATHER_BOOTS
+            iron_boots:
+                chance: .25
+                item:
+                    type: IRON_BOOTS
+    food_pool:
+        tries: 3
+        min: 1
+        drops:
+            steak:
+                chance: .50
+                range: [1,5]
+                item:
+                    type: COOKED_BEEF
