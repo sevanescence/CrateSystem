@@ -27,11 +27,11 @@ table:
             leather_chestplate:
                 chance: .55
                 item:
-                type: LEATHER_CHESTPLATE
+                    type: LEATHER_CHESTPLATE
             chainmail_leggings:
                 chance: .50
                 item:
-                type: CHAINMAIL_LEGGINGS
+                    type: CHAINMAIL_LEGGINGS
             leather_boots:
                 chance: .55
                 item:

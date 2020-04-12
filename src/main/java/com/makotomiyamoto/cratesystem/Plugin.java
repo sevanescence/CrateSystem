@@ -1,16 +1,18 @@
 package com.makotomiyamoto.cratesystem;
 
 import com.google.gson.Gson;
+import com.makotomiyamoto.cratesystem.crate.CrateReference;
 import com.makotomiyamoto.cratesystem.meta.SafeItemStack;
+import com.makotomiyamoto.cratesystem.meta.SafeLocation;
 import com.makotomiyamoto.cratesystem.table.ItemDrop;
 import com.makotomiyamoto.cratesystem.table.LootTable;
 import com.makotomiyamoto.cratesystem.table.Pool;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -177,7 +179,7 @@ public final class Plugin extends JavaPlugin {
             try {
 
                 if (dataLootTableFile.createNewFile())
-                    print(dataLootTableFile.getAbsolutePath() + " created.");
+                    print(dataLootTableFile.getPath() + " created.");
 
                 Gson gson = new Gson();
                 BufferedWriter writer = new BufferedWriter(new FileWriter(dataLootTableFile));
@@ -191,6 +193,47 @@ public final class Plugin extends JavaPlugin {
         }
 
         // todo parse chests.yml
+        assert chestsTarget.exists();
+        DATA_CHESTS = DATA + s + "chests.json";
+        File chestsFile = new File(DATA_CHESTS);
+
+        try {
+            if (chestsFile.createNewFile()) {
+                print(DATA_CHESTS + " created.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        FileConfiguration chestsList = YamlConfiguration.loadConfiguration(chestsTarget);
+        ConfigurationSection chests = chestsList.getConfigurationSection("chests");
+        assert chests != null;
+        CrateReference[] set = new CrateReference[chests.getKeys(false).size()];
+        int i = 0;
+        for (String chestKey : chests.getKeys(false)) {
+
+            ConfigurationSection chestSection = chests.getConfigurationSection(chestKey);
+            CrateReference crate = new CrateReference();
+            try {
+                crate.setLootTablePointers(chestSection.getStringList("loot-tables"));
+            } catch (NullPointerException ignored) {}
+            try {
+                crate.setSafeLocation(SafeLocation.parseFromYamlSection(chestSection.getConfigurationSection("location")));
+            } catch (NullPointerException ignored) {}
+
+            set[i] = crate;
+            i++;
+
+        }
+
+        Gson gson = new Gson();
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(chestsFile));
+            writer.write(gson.toJson(set));
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         print("CrateSystem enabled!");
 
@@ -212,6 +255,9 @@ public final class Plugin extends JavaPlugin {
             Bukkit.getConsoleSender().sendMessage("[CrateSystem] " + message);
         }
 
+    }
+    public void sendMessage(Entity entity, String message) {
+        entity.sendMessage(ChatColor.translateAlternateColorCodes('&', PREFIX + " " + message));
     }
 
 }
